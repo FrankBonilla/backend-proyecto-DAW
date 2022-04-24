@@ -1,8 +1,9 @@
-package com.practica.backend.entitie;
+package com.practica.backend.entities;
 
+import java.sql.Date;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -20,7 +21,6 @@ import javax.persistence.Table;
 @Entity
 @Table(name="PR_PROYECTOS")
 public class Proyecto {
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id_proyecto;
@@ -47,20 +47,18 @@ public class Proyecto {
 	private List<Empleado> empleados = new ArrayList<>();
     
 	
-	//DEFINIMOS LOS CONTRUCTORES
+	/**Constructor por defecto **/
 	public Proyecto() {
 		
 	}
-
+	/**Constructor con parámetros **/
 	public Proyecto(String descripcion, Date f_inicio) {
 		super();
 		this.descripcion = descripcion;
 		this.f_inicio = f_inicio;
 	}
-	
-	//metodos getters y setters
-	
-	
+
+	/**Getters and Setters **/
 	public int getId_proyecto() {
 		return id_proyecto;
 	}
@@ -133,6 +131,31 @@ public class Proyecto {
 	public void removeEmployee(Empleado empleado) {
 		empleados.remove(empleado);;
 	}
-	
+	/**Equals and HashCode **/
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Proyecto proyecto = (Proyecto) o;
+		return id_proyecto == proyecto.id_proyecto && Objects.equals(descripcion, proyecto.descripcion) && Objects.equals(f_inicio, proyecto.f_inicio) && Objects.equals(f_fin, proyecto.f_fin) && Objects.equals(f_baja, proyecto.f_baja) && Objects.equals(lugar, proyecto.lugar) && Objects.equals(observaciones, proyecto.observaciones) && Objects.equals(empleados, proyecto.empleados);
+	}
 
+	@Override
+	public int hashCode() {
+		return Objects.hash(id_proyecto, descripcion, f_inicio, f_fin, f_baja, lugar, observaciones, empleados);
+	}
+	/**toString **/
+	@Override
+	public String toString() {
+		return "Proyecto{" +
+				"id_proyecto=" + id_proyecto +
+				", descripcion='" + descripcion + '\'' +
+				", f_inicio=" + f_inicio +
+				", f_fin=" + f_fin +
+				", f_baja=" + f_baja +
+				", lugar='" + lugar + '\'' +
+				", observaciones='" + observaciones + '\'' +
+				", empleados=" + empleados +
+				'}';
+	}
 }

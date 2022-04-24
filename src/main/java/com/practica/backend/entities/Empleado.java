@@ -1,18 +1,13 @@
-package com.practica.backend.entitie;
-
-import java.util.Date;
+package com.practica.backend.entities;
 
 import javax.persistence.Column;
-import javax.persistence.ColumnResult;
-import javax.persistence.ConstructorResult;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.NamedNativeQuery;
-import javax.persistence.SqlResultSetMapping;
 import javax.persistence.Table;
-
+import java.sql.Date;
+import java.util.Objects;
 
 
 @Entity
@@ -47,14 +42,13 @@ public class Empleado {
 	@Column(name="B_SERMILITAR",nullable= false, length= 1)
     private String serMilitar;
 	
-	
-    //creamos los contructores
+	/**Constructor por defecto **/
     public Empleado() {
     	
     }
-    //constructor con parámetros
+	/**Constructor con parámetros **/
 	public Empleado(String nIF, String nombre, String apellido1, String apellido2, Date nacimiento, String telefono1,
-			String telefono2, String email, Date f_alta, String edoCivil, String serMilitar) {
+					String telefono2, String email, Date f_alta, String edoCivil, String serMilitar) {
 		super();
 		this.NIF = nIF;
 		this.nombre = nombre;
@@ -69,7 +63,7 @@ public class Empleado {
 		this.serMilitar = serMilitar;
 	}
 	
-	//los métodos getters y setters
+	/**Getters and Setters **/
 	public int getId_empleado() {
 		return id_empleado;
 	}
@@ -148,6 +142,37 @@ public class Empleado {
 	public void setSerMilitar(String serMilitar) {
 		this.serMilitar = serMilitar;
 	}
-	
 
+	/**Equals and HashCode **/
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		Empleado empleado = (Empleado) o;
+		return id_empleado == empleado.id_empleado && Objects.equals(NIF, empleado.NIF) && Objects.equals(nombre, empleado.nombre) && Objects.equals(apellido1, empleado.apellido1) && Objects.equals(apellido2, empleado.apellido2) && Objects.equals(nacimiento, empleado.nacimiento) && Objects.equals(telefono1, empleado.telefono1) && Objects.equals(telefono2, empleado.telefono2) && Objects.equals(email, empleado.email) && Objects.equals(f_alta, empleado.f_alta) && Objects.equals(f_baja, empleado.f_baja) && Objects.equals(edoCivil, empleado.edoCivil) && Objects.equals(serMilitar, empleado.serMilitar);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id_empleado, NIF, nombre, apellido1, apellido2, nacimiento, telefono1, telefono2, email, f_alta, f_baja, edoCivil, serMilitar);
+	}
+	/**toString **/
+	@Override
+	public String toString() {
+		return "Empleado{" +
+				"id_empleado=" + id_empleado +
+				", NIF='" + NIF + '\'' +
+				", nombre='" + nombre + '\'' +
+				", apellido1='" + apellido1 + '\'' +
+				", apellido2='" + apellido2 + '\'' +
+				", nacimiento=" + nacimiento +
+				", telefono1='" + telefono1 + '\'' +
+				", telefono2='" + telefono2 + '\'' +
+				", email='" + email + '\'' +
+				", f_alta=" + f_alta +
+				", f_baja=" + f_baja +
+				", edoCivil='" + edoCivil + '\'' +
+				", serMilitar='" + serMilitar + '\'' +
+				'}';
+	}
 }

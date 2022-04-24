@@ -1,20 +1,20 @@
 package com.practica.backend.service;
 
-import java.util.Date;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.practica.backend.dao.ProyectoDao;
-import com.practica.backend.entitie.Empleado;
-import com.practica.backend.entitie.Proyecto;
+import com.practica.backend.repositories.ProyectoRepository;
+import com.practica.backend.entities.Proyecto;
 
 @Service
 public class ProyectoService {
 	
 	@Autowired
-	private ProyectoDao repo;
+	private ProyectoRepository repo;
 	
 	public List<Proyecto> listar(){
 	
@@ -50,8 +50,8 @@ public class ProyectoService {
 	public void darBaja(int id) {
 		
 		Proyecto proyecto = repo.getById(id);
-		Date fecha = new Date();
-		proyecto.setF_baja(fecha);
+		LocalDate fecha = LocalDate.now();
+		proyecto.setF_baja(Date.valueOf(fecha));
 		repo.save(proyecto);
 		
 	}
@@ -69,9 +69,9 @@ public class ProyectoService {
 	}
 	
 	//implantacion del método 2 definido en el DAO
-	public List<?> searchProjectsOfEmple(int id){
+	public List<String> searchProjectsOfEmple(int id){
 		
-		List<?> list = repo.listProjects(id);
+		List<String> list = repo.listProjects(id);
 		if(list != null || list.size() != 0) {
 			
 			return list;

@@ -1,4 +1,4 @@
-package com.practica.backend.dao;
+package com.practica.backend.repositories;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
-import com.practica.backend.entitie.Empleado;
+import com.practica.backend.entities.Empleado;
 
 @Repository
-public interface EmpleadoDao extends JpaRepository <Empleado,Integer> {
+public interface EmpleadoRepository extends JpaRepository <Empleado,Integer> {
 	//creamos una consulta donde devolve´ra los empleados que no esten de baja
 	@Query(value="SELECT l FROM Empleado l WHERE l.f_baja = null")
 	List<Empleado> findByF_alta();

@@ -1,48 +1,44 @@
 package com.practica.backend.service;
 
 
-import java.util.Date;
+
+import java.sql.Date;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.practica.backend.dao.EmpleadoDao;
-import com.practica.backend.entitie.Empleado;
+import com.practica.backend.repositories.EmpleadoRepository;
+import com.practica.backend.entities.Empleado;
 
 @Service
 public class EmpleadoService {
 	//inyectamos el repositorio
 		@Autowired
-		private EmpleadoDao repo;
-		
-		
+		private EmpleadoRepository repo;
+
 		public List<Empleado> listar() {
 			
 			return repo.findAll();
 		}
 
-		
 		public void save(Empleado empleado) {
 			
 			repo.save(empleado);
-			
 		}
 
-		
 		public void delete(int id) {
 			
 			repo.deleteById(id);
-			
 		}
 
-		
 		public Empleado listarId(int id) {
 			
 			return repo.getById(id);
 		}
 
-		
 		public void updateEmployee(Empleado a) {
 			Empleado empleado = listarId(a.getId_empleado());
 			empleado.setNIF(a.getNIF());
@@ -64,8 +60,8 @@ public class EmpleadoService {
 		public void darBaja(int id) {
 			
 			Empleado empleado = repo.getById(id);
-			Date fecha = new Date();
-			empleado.setF_baja(fecha);
+			LocalDate fecha = LocalDate.now();
+			empleado.setF_baja(Date.valueOf(fecha));
 			repo.save(empleado);
 			
 		}
@@ -98,8 +94,8 @@ public class EmpleadoService {
 		public void volver(int id) {
 			//obtenemos el empleado y cambiamos la fecha de alta a la actual
 			Empleado empleado = repo.getById(id);
-			Date fecha = new Date();
-			empleado.setF_alta(fecha);
+			LocalDate fecha = LocalDate.now();
+			empleado.setF_alta(Date.valueOf(fecha));
 			//establecemos null en su fecha de baja para que aparezca de lata nuevamente
 			repo.volverAlta(id);
 			//guardamos el empleado con la nueva fecha de alta
