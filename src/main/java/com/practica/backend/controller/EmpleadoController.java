@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.practica.backend.entities.Empleado;
 import com.practica.backend.service.EmpleadoService;
 
-@CrossOrigin(origins = {"http://localhost:8081"})
+@CrossOrigin(origins = {"http://localhost:4200"}) //conexión con proyecto angular
 @RestController
 @RequestMapping(path="empleados")
 public class EmpleadoController {
@@ -53,7 +53,7 @@ public class EmpleadoController {
 	}
 	
 	@DeleteMapping(path="/borrar/{id}")
-	public void borrar(@PathVariable(name="id", required=true) int id) {
+	public void borrar(@PathVariable(name="id") int id) {
 		service.delete(id);
 	}
 	
@@ -84,7 +84,7 @@ public class EmpleadoController {
 	
 	//método para dar de baja directamente
 	@PostMapping(path="/baja/{id}")
-	public void baja(@PathVariable(name="id",required= true) int id) {
+	public void baja(@PathVariable(name="id") int id) {
 			service.darBaja(id);
 		}
 	
