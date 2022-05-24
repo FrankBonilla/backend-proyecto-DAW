@@ -24,7 +24,7 @@ import com.practica.backend.service.EmpleadoService;
 
 @CrossOrigin(origins = {"http://localhost:4200"}) //conexión con proyecto angular
 @RestController
-@RequestMapping(path="api/")
+@RequestMapping(path="api/empleados")
 public class EmpleadoController {
 	//inyectamos el servicio
 	@Autowired
@@ -35,7 +35,7 @@ public class EmpleadoController {
 	 * Este método devuelve una lista con todos los empleados
 	 * o en su defecto los errores que se puedan producir en la consulta
 	 * **/
-	@GetMapping(path="empleados/lista")
+	@GetMapping(path="/listar")
 	public ResponseEntity<?> mostarTodos(){
 
 		List<Empleado> result;
@@ -62,7 +62,7 @@ public class EmpleadoController {
 	 * Este método devuelve una lista con todos los empleados que están activos
 	 * o en su defecto los errores que se puedan producir en la consulta
 	 * **/
-	@GetMapping(path="empleados/activos")
+	@GetMapping(path="/activos")
 	public ResponseEntity<?> showAct(){
 
 		List<Empleado> result;
@@ -91,7 +91,7 @@ public class EmpleadoController {
 		return empleadoService.showUnsuscribe();
 	}
 	
-	@PostMapping(path="empleados/agregar")
+	@PostMapping(path="/agregar")
 	@ResponseBody
 	public String guardar(@RequestBody Empleado empleado) {
 		
@@ -122,7 +122,7 @@ public class EmpleadoController {
 		
 	}
 	
-	@PostMapping(path="empleados/update")
+	@PostMapping(path="/update")
 	@ResponseBody
 	public void updateEmployee(@RequestBody Empleado empleado) {
 		
@@ -130,13 +130,13 @@ public class EmpleadoController {
 	}
 	
 	//método para dar de baja directamente
-	@PostMapping(path="empleados/baja/{id}")
+	@PostMapping(path="/baja/{id}")
 	public void baja(@PathVariable(name="id") int id) {
 			empleadoService.darBaja(id);
 		}
 	
 	//método para volver a dar de alta
-	@PostMapping(path="empleados/volver-alta")
+	@PostMapping(path="/volver-alta")
 	@ResponseBody
 	public void volver(@RequestBody Map<String, String> json){
 		

@@ -15,8 +15,8 @@ import com.practica.backend.entities.Empleado;
 @Repository
 public interface EmpleadoRepository extends JpaRepository <Empleado,Integer> {
 	//creamos una consulta donde devolve´ra los empleados que no esten de baja
-	@Query(value="SELECT l FROM Empleado l WHERE l.f_baja = null")
-	List<Empleado> findByF_alta();
+	@Query(value="SELECT l FROM Empleado l WHERE l.f_baja IS NULL")
+	List<Empleado> getActivesEmployees();
 	
 	//hacemos una query nativa para listar a los empleados que nos devolverá una columna con true
 	//si estan asiganos al proyecto o de lo contrario false segun el id del proyecto
@@ -24,11 +24,11 @@ public interface EmpleadoRepository extends JpaRepository <Empleado,Integer> {
 	@Query(value="SELECT l.id_empleado, l.tx_nombre, l.tx_apellido1, l.tx_apellido2, "
 			+ "CASE WHEN l.id_empleado IN (SELECT id_empleado FROM pr_empleados_proyecto WHERE id_proyecto = :idPro) THEN 'true' "
 			+ "WHEN l.id_empleado  NOT IN (SELECT id_empleado FROM pr_empleados_proyecto WHERE id_proyecto = :idPro) THEN 'false' END AS asignado "
-			+ "FROM em_empleados l WHERE l.f_baja IS NULL", nativeQuery = true)
+			+ "FROM EMPLEADOS l WHERE l.f_baja IS NULL", nativeQuery = true)
 	List<?> showStatus(@Param("idPro") int id);
 	
 	//definimos los empleados asignados al proyecto segun id
-	@Query(value="select tx_nombre from em_empleados a join "
+	@Query(value="select tx_nombre from EMPLEADOS a join "
 			+ "pr_empleados_proyecto b on a.id_empleado=b.id_empleado where b.id_proyecto = :idPro",nativeQuery=true)
 	List<?> searchEmployeesInProject(@Param("idPro") int id);
 	
@@ -39,7 +39,7 @@ public interface EmpleadoRepository extends JpaRepository <Empleado,Integer> {
 	//método para volver a dar el alta a un empleado dado de baja, añadimos dos anotaciones para poder ejecutar este tipo de query 
 	@Modifying
 	@Transactional
-	@Query(value="UPDATE em_empleados SET f_baja= null WHERE id_empleado = :idEmp", nativeQuery=true)
+	@Query(value="UPDATE EMPLEADOS SET f_baja= null WHERE id_empleado = :idEmp", nativeQuery=true)
 	void volverAlta(@Param("idEmp") int id);
 	
 	

@@ -11,7 +11,7 @@ import java.util.Objects;
 
 
 @Entity
-@Table(name="EM_EMPLEADOS")
+@Table(name="EMPLEADOS")
 public class Empleado {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
@@ -35,7 +35,7 @@ public class Empleado {
     private String email;
 	@Column(name="F_ALTA",nullable= false)
     private Date f_alta;
-	@Column(name="F_BAJA",nullable= true)
+	@Column(name="F_BAJA")
     private Date f_baja;
 	@Column(name="CX_EDOCIVIL",nullable= false, length= 1)
     private String edoCivil;

@@ -4,7 +4,6 @@ package com.practica.backend.service;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,7 +67,7 @@ public class EmpleadoService {
 		//método 1 que define la consulta creada en el repositorio
 		public List<Empleado> mostarActivos(){
 			
-			return repo.findByF_alta();
+			return repo.getActivesEmployees();
 		}
 		
 		//metodo 2 que define la consulta de empleados y muestra su asignación
