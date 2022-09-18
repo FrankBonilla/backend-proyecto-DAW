@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import com.practica.backend.repositories.EmpleadoRepository;
 import com.practica.backend.entities.Empleado;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 public class EmpleadoService {
@@ -23,20 +24,20 @@ public class EmpleadoService {
 			
 			return repo.findAll();
 		}
-
-		public void save(Empleado empleado) {
+		@Transactional
+		public Empleado save(Empleado empleado) {
 			
-			repo.save(empleado);
+			return repo.save(empleado);
 		}
 
 		public void delete(int id) {
 			
 			repo.deleteById(id);
 		}
-
+		@Transactional(readOnly = true)
 		public Empleado listarId(int id) {
-			
-			return repo.getById(id);
+			//si lo encuentra retorna un objeto tipo empleado, si no un null
+			return repo.findById(id).orElse(null);
 		}
 
 		public void updateEmployee(Empleado a) {
