@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
@@ -26,6 +28,8 @@ import com.practica.backend.service.EmpleadoService;
 @RestController
 @RequestMapping(path="api/")
 public class EmpleadoController {
+
+	private static final Logger LOGGER = LogManager.getLogger(EmpleadoController.class);
 	//inyectamos el servicio
 	@Autowired
 	EmpleadoService empleadoService;
@@ -37,7 +41,7 @@ public class EmpleadoController {
 	 * **/
 	@GetMapping(path="empleados/lista")
 	public ResponseEntity<?> mostarTodos(){
-
+		LOGGER.info("Consultando todos empleados");
 		List<Empleado> result;
 		Map<String, Object> response = new HashMap<>();
 
@@ -45,16 +49,19 @@ public class EmpleadoController {
 			result = empleadoService.listar();
 
 		}catch (DataAccessException e){
+			LOGGER.error("Error al realizar la consulta a la base de datos");
 			response.put("mensaje","Error al realizar la consulta a la base de datos");
 			response.put("error",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<>(response,httpStatus.NOT_FOUND);
 		}
 
 		if(result == null) {
+			LOGGER.warn("La base de datos no tiene empleados registrados");
 			response.put("mensaje","La base de datos no tiene empleados registrados");
 			return new ResponseEntity<>(response,httpStatus.NOT_FOUND);
 		}
 
+		LOGGER.info("Consulta de empleados finalizada con {} resultados",result.size());
 		return new ResponseEntity<>(result,httpStatus.OK);
 	}
 
@@ -64,7 +71,7 @@ public class EmpleadoController {
 	 * **/
 	@GetMapping(path="empleados/activos")
 	public ResponseEntity<?> showAct(){
-
+		LOGGER.info("Consultando todos empleados de alta");
 		List<Empleado> result;
 		Map<String, Object> response = new HashMap<>();
 
@@ -72,23 +79,42 @@ public class EmpleadoController {
 			result = empleadoService.mostarActivos();
 
 		}catch (DataAccessException e){
+			LOGGER.error("Error al realizar la consulta a la base de datos");
 			response.put("mensaje","Error al realizar la consulta a la base de datos");
 			response.put("error",e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			return new ResponseEntity<>(response,httpStatus.NOT_FOUND);
 		}
 
 		if(result == null) {
+			LOGGER.warn("La base de datos no tiene empleados activos");
 			response.put("mensaje","La base de datos no tiene empleados activos");
 			return new ResponseEntity<>(response,httpStatus.NOT_FOUND);
 		}
 
+		LOGGER.info("Consulta de empleados finalizada con {} resultados",result.size());
 		return new ResponseEntity<>(result, httpStatus.OK);
 	}
 	
 	@GetMapping(path="empleados/inactivos")
-	public List<Empleado> showUnsuscribe(){
-		
-		return empleadoService.showUnsuscribe();
+	public ResponseEntity<List<Empleado>> showUnsuscribe(){
+		LOGGER.info("Consultando todos empleados de baja");
+		List<Empleado> result = null;
+
+		try{
+			result = empleadoService.showUnsuscribe();
+
+		}catch(DataAccessException e){
+			LOGGER.error("error: "+e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
+			return new ResponseEntity<>(result,httpStatus.NO_CONTENT);
+		}
+
+		if(result == null){
+			LOGGER.warn("La base de datos no tiene empleados de baja");
+			return new ResponseEntity<>(result,httpStatus.NO_CONTENT);
+		}
+
+		LOGGER.info("Consulta de empleados finalizada con {} resultados",result.size());
+		return new ResponseEntity<>(result,httpStatus.OK);
 	}
 	
 	@PostMapping(path="empleados/agregar")
