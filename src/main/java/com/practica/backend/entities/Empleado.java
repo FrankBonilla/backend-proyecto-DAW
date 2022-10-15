@@ -15,31 +15,31 @@ import java.util.Objects;
 public class Empleado {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	@Column(name="id_empleado")
+	@Column(name="idEmpleado")
 	private int id_empleado;
-	@Column(name="TX_NIF",nullable= false,length =9)
+	@Column(name="nif",nullable= false,length =9)
 	private String NIF;
-	@Column(name="TX_NOMBRE",nullable= false,length= 30)
+	@Column(name="nombre",nullable= false,length= 30)
 	private String nombre;
-	@Column(name="TX_APELLIDO1",nullable= false,length= 40)
+	@Column(name="apellido1",nullable= false,length= 40)
 	private String apellido1;
-	@Column(name="TX_APELLIDO2",nullable= false,length= 40)
+	@Column(name="apellido2",nullable= false,length= 40)
 	private String apellido2;
-	@Column(name="F_NACIMIENTO",nullable= false)
+	@Column(name="fechaNacimiento",nullable= false)
 	private Date nacimiento;
-	@Column(name="N_TELEFONO1",nullable=false,length= 12)
+	@Column(name="telefono1",nullable=false,length= 12)
 	private String telefono1;
-	@Column(name="N_TELEFONO2",nullable= false,length= 12)
+	@Column(name="telefono2",length= 12)
     private String telefono2;
-	@Column(name="TX_EMAIL",nullable= false,length= 40)
+	@Column(name="email",nullable= false,length= 40)
     private String email;
-	@Column(name="F_ALTA",nullable= false)
+	@Column(name="fechaAlta",nullable= false)
     private Date f_alta;
-	@Column(name="F_BAJA",nullable= true)
-    private Date f_baja;
-	@Column(name="CX_EDOCIVIL",nullable= false, length= 1)
+	@Column(name="fechaBaja")
+    private Date fechaBaja;
+	@Column(name="edoCivil",nullable= false, length= 1)
     private String edoCivil;
-	@Column(name="B_SERMILITAR",nullable= false, length= 1)
+	@Column(name="serMilitar",nullable= false, length= 1)
     private String serMilitar;
 	
 	/**Constructor por defecto **/
@@ -124,11 +124,11 @@ public class Empleado {
 	public void setF_alta(Date f_alta) {
 		this.f_alta = f_alta;
 	}
-	public Date getF_baja() {
-		return f_baja;
+	public Date getFechaBaja() {
+		return fechaBaja;
 	}
-	public void setF_baja(Date f_baja) {
-		this.f_baja = f_baja;
+	public void setFechaBaja(Date fechaBaja) {
+		this.fechaBaja = fechaBaja;
 	}
 	public String getEdoCivil() {
 		return edoCivil;
@@ -149,12 +149,12 @@ public class Empleado {
 		if (this == o) return true;
 		if (o == null || getClass() != o.getClass()) return false;
 		Empleado empleado = (Empleado) o;
-		return id_empleado == empleado.id_empleado && Objects.equals(NIF, empleado.NIF) && Objects.equals(nombre, empleado.nombre) && Objects.equals(apellido1, empleado.apellido1) && Objects.equals(apellido2, empleado.apellido2) && Objects.equals(nacimiento, empleado.nacimiento) && Objects.equals(telefono1, empleado.telefono1) && Objects.equals(telefono2, empleado.telefono2) && Objects.equals(email, empleado.email) && Objects.equals(f_alta, empleado.f_alta) && Objects.equals(f_baja, empleado.f_baja) && Objects.equals(edoCivil, empleado.edoCivil) && Objects.equals(serMilitar, empleado.serMilitar);
+		return id_empleado == empleado.id_empleado && Objects.equals(NIF, empleado.NIF) && Objects.equals(nombre, empleado.nombre) && Objects.equals(apellido1, empleado.apellido1) && Objects.equals(apellido2, empleado.apellido2) && Objects.equals(nacimiento, empleado.nacimiento) && Objects.equals(telefono1, empleado.telefono1) && Objects.equals(telefono2, empleado.telefono2) && Objects.equals(email, empleado.email) && Objects.equals(f_alta, empleado.f_alta) && Objects.equals(fechaBaja, empleado.fechaBaja) && Objects.equals(edoCivil, empleado.edoCivil) && Objects.equals(serMilitar, empleado.serMilitar);
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(id_empleado, NIF, nombre, apellido1, apellido2, nacimiento, telefono1, telefono2, email, f_alta, f_baja, edoCivil, serMilitar);
+		return Objects.hash(id_empleado, NIF, nombre, apellido1, apellido2, nacimiento, telefono1, telefono2, email, f_alta, fechaBaja, edoCivil, serMilitar);
 	}
 	/**toString **/
 	@Override
@@ -170,7 +170,7 @@ public class Empleado {
 				", telefono2='" + telefono2 + '\'' +
 				", email='" + email + '\'' +
 				", f_alta=" + f_alta +
-				", f_baja=" + f_baja +
+				", fechaBaja=" + fechaBaja +
 				", edoCivil='" + edoCivil + '\'' +
 				", serMilitar='" + serMilitar + '\'' +
 				'}';
